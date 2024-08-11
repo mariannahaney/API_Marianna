@@ -5,7 +5,11 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import pojo.Post;
 import pojo.User;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 public class ApiUtils {
     private TestContext testContext;
@@ -16,12 +20,17 @@ public class ApiUtils {
     public void setUpConnection() {
         testContext.requestSpecification = RestAssured.given().
                 baseUri(ConfigReader.readProperty("base-url"))
-                .header("Authorization", "Bearer " + getBearerToken());
+                .header("Authorization", "Bearer " + ConfigReader.readProperty("token"));
     }
 
-    public String getBearerToken() {
-        return ConfigReader.readProperty("token");
-    }
+//    public String getBearerToken(String property) {
+//        return switch (property) {
+//            case "token" ->
+//                    System.getenv("API_TOKEN") != null ? System.getenv("API_TOKEN") : new ConfigReader().getPropertyFromFile(property);
+//            default -> new ConfigReader().getPropertyFromFile(property);
+//        };
+//    }
+
 
     public List<User> getUsers(){
         testContext.requestSpecification.basePath("public/v2/users");

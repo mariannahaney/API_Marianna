@@ -7,7 +7,11 @@ import java.util.Properties;
 public class ConfigReader {
 
     public static String readProperty(String property) {
-         return new ConfigReader().getPropertyFromFile(property);
+        return switch (property) {
+            case "token" ->
+                    System.getenv("API_TOKEN") != null ? System.getenv("API_TOKEN") : new ConfigReader().getPropertyFromFile(property);
+            default -> new ConfigReader().getPropertyFromFile(property);
+        };
     }
 
     private String getPropertyFromFile(String property) {
