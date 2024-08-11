@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "stepDefs",
         stepNotifications = true,
-        tags = "@US100 or @US101",
+        tags = "@US100",
         dryRun = false
 )
 
